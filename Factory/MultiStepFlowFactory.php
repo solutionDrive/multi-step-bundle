@@ -1,0 +1,38 @@
+<?php
+declare(strict_types=1);
+
+/*
+ * Created by solutionDrive GmbH
+ *
+ * @copyright 2018 solutionDrive GmbH
+ */
+
+namespace sd\Morpheus\MultiStepBundle\Factory;
+
+use sd\Morpheus\MultiStepBundle\Model\MultiStepFlow;
+use sd\Morpheus\MultiStepBundle\Model\MultiStepFlowInterface;
+
+class MultiStepFlowFactory
+{
+    /** @var MultiStepFactory */
+    private $stepFactory;
+
+    public function __construct(MultiStepFactory $stepFactory)
+    {
+        $this->stepFactory = $stepFactory;
+    }
+
+    /**
+     * @param string     $id     The ID of the flow
+     * @param string[][] $config The configuration (steps) of the flow
+     */
+    public function createFromConfig(string $id, array $config): MultiStepFlowInterface
+    {
+        $flow = new MultiStepFlow();
+        foreach ($config['steps'] as $key => $value) {
+            $step = $this->stepFactory->createFromConfig($key, $value);
+            $flow->addStep($step);
+        }
+        return $flow;
+    }
+}
