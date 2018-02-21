@@ -26,5 +26,20 @@ class MultiStepExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
+
+        // parse flows
+        $this->parseFlows($config['flows'], $container);
+    }
+
+    /**
+     * @param string[][]       $flowsArray The raw flow configuration
+     * @param ContainerBuilder $container  The container the flows should be added
+     */
+    private function parseFlows(array $flowsArray, ContainerBuilder $container): void
+    {
+        $registryDefinition = $container->getDefinition('sd.multistep.flow_registry');
+        foreach ($flowsArray as $id => $config) {
+            $registryDefinition->addMethodCall('addByConfig', [$id, $config]);
+        }
     }
 }
