@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class MultiStepController extends Controller
 {
@@ -44,15 +45,52 @@ class MultiStepController extends Controller
         $configuredController = $step->getControllerAction();
 
         $request->attributes->set('_controller', $configuredController);
-        $request->attributes->set('flow', $flow);
-        $request->attributes->set('step', $step);
+
+        $currentRoute = $request->get('_route');
 
         $callableController = $this->controllerResolver->getController($request);
         $arguments = $this->argumentResolver->getArguments($request, $callableController);
 
         $controller = $callableController[0];
+
+        // set template if configured
         if ($controller instanceof TemplateAwareControllerInterface && '' !== $step->getTemplate()) {
             $controller->setTemplate($step->getTemplate());
+        }
+
+        // set previous and next steps
+        if ($controller instanceof StepDirectionAwareInterface) {
+            /** @var RouterInterface $router */
+            $router = $this->get('router');
+            $nextStep = $flow->getStepAfter($step);
+            $previousStep = $flow->getStepBefore($step);
+
+            if (null !== $nextStep) {
+                $nextStepLink = $router->generate(
+                    $currentRoute,
+                    ['flow_slug' => $flow_slug, 'step_slug' => $nextStep->getSlug()]
+                );
+                $controller->setNextStep($nextStep);
+                $controller->setNextStepLink($nextStepLink);
+            }
+            if (null !== $previousStep) {
+                $previousStepLink = $router->generate(
+                    $currentRoute,
+                    ['flow_slug' => $flow_slug, 'step_slug' => $previousStep->getSlug()]
+                );
+                $controller->setPreviousStep($previousStep);
+                $controller->setPreviousStepLink($previousStepLink);
+            }
+        }
+
+        // set flow
+        if ($controller instanceof FlowAwareInterface) {
+            $controller->setFlow($flow);
+        }
+
+        // set step
+        if ($controller instanceof StepAwareInterface) {
+            $controller->setStep($step);
         }
 
         return call_user_func_array($callableController, $arguments);

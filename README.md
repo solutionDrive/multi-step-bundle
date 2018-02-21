@@ -43,7 +43,7 @@ For example a flow with slug "second-flow" with step "first-step" will be availa
 ### Controllers
 
 You have to configure which controller::action will be called in which step.
-If you want to, you can extend the ```DefaultStepController``` and use what it provides.
+It is strongly recommended to extend the ```DefaultStepController``` and use what it provides.
 
 
 Example Configuration

@@ -27,5 +27,9 @@ interface MultiStepFlowInterface
 
     public function getStepBySlug(string $slug): MultiStepInterface;
 
+    public function getStepAfter(MultiStepInterface $currentStep): ?MultiStepInterface;
+
+    public function getStepBefore(MultiStepInterface $currentStep): ?MultiStepInterface;
+
     public function addStep(MultiStepInterface $step): void;
 }

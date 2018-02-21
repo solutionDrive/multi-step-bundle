@@ -69,6 +69,36 @@ class MultiStepFlow implements MultiStepFlowInterface
         return $this->stepsBySlug[$slug];
     }
 
+    public function getStepAfter(MultiStepInterface $currentStep): ?MultiStepInterface
+    {
+        reset($this->steps);
+        $step = current($this->steps);
+        while (false !== $step) {
+            if ($currentStep->getId() === $step->getId()) {
+                $nextStep = next($this->steps);
+                if (false !== $nextStep) {
+                    return $nextStep;
+                } else {
+                    return null;
+                }
+            }
+            $step = next($this->steps);
+        }
+        return null;
+    }
+
+    public function getStepBefore(MultiStepInterface $currentStep): ?MultiStepInterface
+    {
+        $previousStep = null;
+        foreach ($this->steps as $step) {
+            if ($currentStep->getId() === $step->getId()) {
+                return $previousStep;
+            }
+            $previousStep = $step;
+        }
+        return null;
+    }
+
     public function addStep(MultiStepInterface $step): void
     {
         $this->steps[$step->getId()] = $step;
