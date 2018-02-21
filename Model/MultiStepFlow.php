@@ -14,8 +14,12 @@ class MultiStepFlow implements MultiStepFlowInterface
     /** @var string */
     private $id = '';
 
+    /** @var string */
+    private $slug = '';
+
     /** @var MultiStepInterface[] */
     private $steps = [];
+
 
     public function getId(): string
     {
@@ -25,6 +29,16 @@ class MultiStepFlow implements MultiStepFlowInterface
     public function setId(string $id): void
     {
         $this->id = $id;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     /**

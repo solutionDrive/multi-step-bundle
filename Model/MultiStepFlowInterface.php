@@ -14,6 +14,10 @@ interface MultiStepFlowInterface
 
     public function setId(string $id): void;
 
+    public function getSlug(): string;
+
+    public function setSlug(string $slug): void;
+
     /**
      * @return MultiStepInterface[]
      */

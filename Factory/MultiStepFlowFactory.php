@@ -29,6 +29,12 @@ class MultiStepFlowFactory
     public function createFromConfig(string $id, array $config): MultiStepFlowInterface
     {
         $flow = new MultiStepFlow();
+        $flow->setId($id);
+        if (true === isset($config['slug'])) {
+            $flow->setSlug((string)$config['slug']);
+        } else {
+            $flow->setSlug($id);
+        }
         foreach ($config['steps'] as $key => $value) {
             $step = $this->stepFactory->createFromConfig($key, $value);
             $flow->addStep($step);
