@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace sd\Morpheus\MultiStepBundle\Model;
 
+use sd\Morpheus\MultiStepBundle\Exception\StepNotFoundException;
+
 class MultiStepFlow implements MultiStepFlowInterface
 {
     /** @var string */
@@ -19,6 +21,9 @@ class MultiStepFlow implements MultiStepFlowInterface
 
     /** @var MultiStepInterface[] */
     private $steps = [];
+
+    /** @var MultiStepInterface[] */
+    private $stepsBySlug = [];
 
 
     public function getId(): string
@@ -49,8 +54,25 @@ class MultiStepFlow implements MultiStepFlowInterface
         return $this->steps;
     }
 
+    public function getStepById(string $id): MultiStepInterface
+    {
+        if (false === isset($this->steps[$id])) {
+            throw new StepNotFoundException($id);
+        }
+        return $this->steps[$id];
+    }
+
+    public function getStepBySlug(string $slug): MultiStepInterface
+    {
+        if (false === isset($this->stepsBySlug[$slug])) {
+            throw new StepNotFoundException('', $slug);
+        }
+        return $this->stepsBySlug[$slug];
+    }
+
     public function addStep(MultiStepInterface $step): void
     {
-        $this->steps[] = $step;
+        $this->steps[$step->getId()] = $step;
+        $this->stepsBySlug[$step->getSlug()] = $step;
     }
 }

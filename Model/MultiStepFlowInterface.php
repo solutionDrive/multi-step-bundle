@@ -23,5 +23,9 @@ interface MultiStepFlowInterface
      */
     public function getSteps(): array;
 
+    public function getStepById(string $id): MultiStepInterface;
+
+    public function getStepBySlug(string $slug): MultiStepInterface;
+
     public function addStep(MultiStepInterface $step): void;
 }
