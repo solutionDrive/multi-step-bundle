@@ -21,6 +21,9 @@ class MultiStep implements MultiStepInterface
     private $slug = '';
 
     /** @var string */
+    private $template = '';
+
+    /** @var string */
     private $controllerAction = '';
 
     /**
@@ -69,6 +72,22 @@ class MultiStep implements MultiStepInterface
     public function setSlug(string $slug): void
     {
         $this->slug = $slug;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate(): string
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate(string $template): void
+    {
+        $this->template = $template;
     }
 
     /**

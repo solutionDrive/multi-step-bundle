@@ -22,6 +22,10 @@ interface MultiStepInterface
 
     public function setSlug(string $slug): void;
 
+    public function getTemplate(): string;
+
+    public function setTemplate(string $slug): void;
+
     public function getControllerAction(): string;
 
     public function setControllerAction(string $controllerAction): void;

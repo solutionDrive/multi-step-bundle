@@ -24,6 +24,7 @@ class MultiStepFactory
         $step->setId($id);
         $step->setAlias($config['alias']);
         $step->setSlug($config['slug']);
+        $step->setTemplate($config['template']);
         $step->setControllerAction($config['controller']);
         return $step;
     }
