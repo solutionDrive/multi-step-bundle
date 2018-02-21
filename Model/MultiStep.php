@@ -26,81 +26,51 @@ class MultiStep implements MultiStepInterface
     /** @var string */
     private $controllerAction = '';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setId(string $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAlias(): string
     {
         return $this->alias;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAlias(string $alias): void
     {
         $this->alias = $alias;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setSlug(string $slug): void
     {
         $this->slug = $slug;
     }
 
-    /**
-     * @return string
-     */
     public function getTemplate(): string
     {
         return $this->template;
     }
 
-    /**
-     * @param string $template
-     */
     public function setTemplate(string $template): void
     {
         $this->template = $template;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getControllerAction(): string
     {
         return $this->controllerAction;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setControllerAction(string $controllerAction): void
     {
         $this->controllerAction = $controllerAction;
