@@ -12,6 +12,7 @@ namespace sd\Morpheus\MultiStepBundle\Controller;
 use sd\Morpheus\MultiStepBundle\Registry\MultiStepFlowRegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 
@@ -36,7 +37,7 @@ class MultiStepController extends Controller
         $this->argumentResolver = $argumentResolver;
     }
 
-    public function stepAction(Request $request, string $flow_slug, string $step_slug)
+    public function stepAction(Request $request, string $flow_slug, string $step_slug): Response
     {
         $flow = $this->flowRegistry->getFlowBySlug($flow_slug);
         $step = $flow->getStepBySlug($step_slug);
@@ -50,7 +51,7 @@ class MultiStepController extends Controller
         $arguments = $this->argumentResolver->getArguments($request, $callableController);
 
         $controller = $callableController[0];
-        if ($controller instanceof TemplateAwareControllerInterface && $step->getTemplate() !== '') {
+        if ($controller instanceof TemplateAwareControllerInterface && '' !== $step->getTemplate()) {
             $controller->setTemplate($step->getTemplate());
         }
 
