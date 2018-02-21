@@ -22,12 +22,22 @@ class FlowNotFoundException extends \RuntimeException
     public function __construct(
         string $id = '',
         string $slug = '',
-        string $message = "",
+        string $message = '',
         int $code = 0,
         Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
         $this->id = $id;
         $this->slug = $slug;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
     }
 }
