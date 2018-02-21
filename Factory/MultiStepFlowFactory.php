@@ -31,7 +31,7 @@ class MultiStepFlowFactory
         $flow = new MultiStepFlow();
         $flow->setId($id);
         if (true === isset($config['slug'])) {
-            $flow->setSlug((string)$config['slug']);
+            $flow->setSlug((string) $config['slug']);
         } else {
             $flow->setSlug($id);
         }

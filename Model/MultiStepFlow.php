@@ -25,7 +25,6 @@ class MultiStepFlow implements MultiStepFlowInterface
     /** @var MultiStepInterface[] */
     private $stepsBySlug = [];
 
-
     public function getId(): string
     {
         return $this->id;
