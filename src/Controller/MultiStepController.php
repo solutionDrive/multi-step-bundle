@@ -7,9 +7,9 @@ declare(strict_types=1);
  * @copyright 2018 solutionDrive GmbH
  */
 
-namespace sd\Morpheus\MultiStepBundle\Controller;
+namespace solutionDrive\MultiStepBundle\Controller;
 
-use sd\Morpheus\MultiStepBundle\Registry\MultiStepFlowRegistryInterface;
+use solutionDrive\MultiStepBundle\Registry\MultiStepFlowRegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

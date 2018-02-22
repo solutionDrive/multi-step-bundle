@@ -6,7 +6,7 @@
  * @copyright 2018 solutionDrive GmbH
  */
 
-namespace sd\Morpheus\MultiStepBundle\Model;
+namespace solutionDrive\MultiStepBundle\Model;
 
 interface MultiStepFlowInterface
 {

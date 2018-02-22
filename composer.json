@@ -13,5 +13,13 @@
     "require-dev": {
         "behat/behat": "^3.4",
         "phpspec/phpspec": "^4.3"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "solutionDrive\\MultiStepBundle\\": "src/"
+        }
     }
 }

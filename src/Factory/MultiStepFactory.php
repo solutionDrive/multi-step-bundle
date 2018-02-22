@@ -7,10 +7,10 @@ declare(strict_types=1);
  * @copyright 2018 solutionDrive GmbH
  */
 
-namespace sd\Morpheus\MultiStepBundle\Factory;
+namespace solutionDrive\MultiStepBundle\Factory;
 
-use sd\Morpheus\MultiStepBundle\Model\MultiStep;
-use sd\Morpheus\MultiStepBundle\Model\MultiStepInterface;
+use solutionDrive\MultiStepBundle\Model\MultiStep;
+use solutionDrive\MultiStepBundle\Model\MultiStepInterface;
 
 class MultiStepFactory
 {

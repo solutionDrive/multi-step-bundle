@@ -7,11 +7,11 @@ declare(strict_types=1);
  * @copyright 2018 solutionDrive GmbH
  */
 
-namespace sd\Morpheus\MultiStepBundle\Controller;
+namespace solutionDrive\MultiStepBundle\Controller;
 
-use sd\Morpheus\MultiStepBundle\Exception\NoNextOrPreviousStepException;
-use sd\Morpheus\MultiStepBundle\Model\MultiStepFlowInterface;
-use sd\Morpheus\MultiStepBundle\Model\MultiStepInterface;
+use solutionDrive\MultiStepBundle\Exception\NoNextOrPreviousStepException;
+use solutionDrive\MultiStepBundle\Model\MultiStepFlowInterface;
+use solutionDrive\MultiStepBundle\Model\MultiStepInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

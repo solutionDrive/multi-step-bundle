@@ -7,11 +7,11 @@ declare(strict_types=1);
  * @copyright 2018 solutionDrive GmbH
  */
 
-namespace sd\Morpheus\MultiStepBundle\Registry;
+namespace solutionDrive\MultiStepBundle\Registry;
 
-use sd\Morpheus\MultiStepBundle\Exception\FlowNotFoundException;
-use sd\Morpheus\MultiStepBundle\Factory\MultiStepFlowFactory;
-use sd\Morpheus\MultiStepBundle\Model\MultiStepFlowInterface;
+use solutionDrive\MultiStepBundle\Exception\FlowNotFoundException;
+use solutionDrive\MultiStepBundle\Factory\MultiStepFlowFactory;
+use solutionDrive\MultiStepBundle\Model\MultiStepFlowInterface;
 
 class MultiStepFlowRegistry implements MultiStepFlowRegistryInterface
 {
