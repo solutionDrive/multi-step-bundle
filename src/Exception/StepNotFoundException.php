@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2018 solutionDrive GmbH
  */
 
-namespace sd\Morpheus\MultiStepBundle\Exception;
+namespace solutionDrive\MultiStepBundle\Exception;
 
 use Throwable;
 

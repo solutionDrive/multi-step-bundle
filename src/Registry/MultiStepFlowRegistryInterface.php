@@ -7,9 +7,9 @@ declare(strict_types=1);
  * @copyright 2018 solutionDrive GmbH
  */
 
-namespace sd\Morpheus\MultiStepBundle\Registry;
+namespace solutionDrive\MultiStepBundle\Registry;
 
-use sd\Morpheus\MultiStepBundle\Model\MultiStepFlowInterface;
+use solutionDrive\MultiStepBundle\Model\MultiStepFlowInterface;
 
 interface MultiStepFlowRegistryInterface
 {

@@ -7,9 +7,9 @@ declare(strict_types=1);
  * @copyright 2018 solutionDrive GmbH
  */
 
-namespace sd\Morpheus\MultiStepBundle\Model;
+namespace solutionDrive\MultiStepBundle\Model;
 
-use sd\Morpheus\MultiStepBundle\Exception\StepNotFoundException;
+use solutionDrive\MultiStepBundle\Exception\StepNotFoundException;
 
 class MultiStepFlow implements MultiStepFlowInterface
 {

@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @copyright 2018 solutionDrive GmbH
  */
 
-namespace sd\Morpheus\MultiStepBundle\DependencyInjection;
+namespace solutionDrive\MultiStepBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -36,7 +36,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('template')->defaultValue('')->end()
                                         ->scalarNode('controller')
                                             ->defaultValue(
-                                                'sd\Morpheus\MultiStepBundle\Controller\DefaultStepController::renderAction'
+                                                'solutionDrive\MultiStepBundle\Controller\DefaultStepController::renderAction'
                                             )
                                         ->end()
                                     ->end()

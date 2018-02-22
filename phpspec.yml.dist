@@ -1,0 +1,4 @@
+suites:
+    default:
+        namespace: solutionDrive\MultiStepBundle
+        psr4_prefix: solutionDrive\MultiStepBundle
