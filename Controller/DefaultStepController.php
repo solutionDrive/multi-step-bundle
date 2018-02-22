@@ -75,24 +75,24 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
      * Redirects the user to the next step of the flow.
      * Throws an NoNextOrPreviousStepException if there isn't any next step.
      */
-    public function redirectToNextStep(): RedirectResponse
+    public function redirectToNextStep(int $statusCode = 302): RedirectResponse
     {
         if (null === $this->nextStepLink) {
             throw new NoNextOrPreviousStepException();
         }
-        return $this->redirect($this->nextStepLink);
+        return $this->redirect($this->nextStepLink, $statusCode);
     }
 
     /**
      * Redirects the user to the previous step of the flow.
      * Throws an NoNextOrPreviousStepException if there isn't any previous step.
      */
-    public function redirectToPreviousStep(): RedirectResponse
+    public function redirectToPreviousStep(int $statusCode = 302): RedirectResponse
     {
         if (null === $this->previousStepLink) {
             throw new NoNextOrPreviousStepException();
         }
-        return $this->redirect($this->previousStepLink);
+        return $this->redirect($this->previousStepLink, $statusCode);
     }
 
     /**
