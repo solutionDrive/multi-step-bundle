@@ -1,0 +1,17 @@
+{
+    "name": "solutiondrive/multi-step-bundle",
+    "description": "Symfony bundle helping to implement multi step user experience flows.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "solutionDrive",
+            "email": "entwickler@solutiondrive.de"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "behat/behat": "^3.4",
+        "phpspec/phpspec": "^4.3"
+    }
+}
