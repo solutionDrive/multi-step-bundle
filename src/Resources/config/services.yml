@@ -1,19 +1,19 @@
 services:
   sd.multistep.step_factory:
-    class: sd\Morpheus\MultiStepBundle\Factory\MultiStepFactory
+    class: solutionDrive\MultiStepBundle\Factory\MultiStepFactory
 
   sd.multistep.flow_factory:
-    class: sd\Morpheus\MultiStepBundle\Factory\MultiStepFlowFactory
+    class: solutionDrive\MultiStepBundle\Factory\MultiStepFlowFactory
     arguments:
       - "@sd.multistep.step_factory"
 
   sd.multistep.flow_registry:
-    class: sd\Morpheus\MultiStepBundle\Registry\MultiStepFlowRegistry
+    class: solutionDrive\MultiStepBundle\Registry\MultiStepFlowRegistry
     arguments:
       - "@sd.multistep.flow_factory"
 
   sd.multistep.controller:
-    class: sd\Morpheus\MultiStepBundle\Controller\MultiStepController
+    class: solutionDrive\MultiStepBundle\Controller\MultiStepController
     arguments:
       - "@sd.multistep.flow_registry"
       - "@controller_resolver"
