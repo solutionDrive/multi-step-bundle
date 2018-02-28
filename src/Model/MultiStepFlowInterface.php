@@ -32,4 +32,6 @@ interface MultiStepFlowInterface
     public function getStepBefore(MultiStepInterface $currentStep): ?MultiStepInterface;
 
     public function addStep(MultiStepInterface $step): void;
+
+    public function getFirstStep(): MultiStepInterface;
 }
