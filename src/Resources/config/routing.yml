@@ -4,6 +4,11 @@ sd_multistep:
         flow_slug: ^[^/]+$
         step_slug: ^[^/]+$
     controller: sd.multistep.controller:stepAction
+sd_multistep_start:
+    path: /
+    requirements:
+        flow_slug: ^[^/]+$
+    controller: sd.multistep.controller:firstStepAction
 
 # May be used in future? Not implemented yet, but should be noted here...
 #sd_multistep_with_parameters:
