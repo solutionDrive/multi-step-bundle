@@ -123,4 +123,14 @@ final class MultiStepFlowSpec extends ObjectBehavior
 
         $this->getStepAfter($stepCurrent)->shouldReturn(null);
     }
+
+    function it_can_get_first_step(
+        MultiStepInterface $firstStep
+    ) {
+        $firstStep->getId()->willReturn('first-step');
+        $firstStep->getSlug()->willReturn('first-step');
+        $this->addStep($firstStep);
+
+        $this->getFirstStep()->shouldReturn($firstStep);
+    }
 }

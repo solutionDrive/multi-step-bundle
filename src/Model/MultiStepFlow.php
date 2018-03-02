@@ -104,4 +104,13 @@ class MultiStepFlow implements MultiStepFlowInterface
         $this->steps[$step->getId()] = $step;
         $this->stepsBySlug[$step->getSlug()] = $step;
     }
+
+    public function getFirstStep(): MultiStepInterface
+    {
+        if (empty($this->steps)) {
+            throw new StepNotFoundException();
+        }
+        reset($this->steps);
+        return current($this->steps);
+    }
 }
