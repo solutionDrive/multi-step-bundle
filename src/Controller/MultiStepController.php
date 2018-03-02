@@ -97,16 +97,13 @@ class MultiStepController extends Controller
         return call_user_func_array($callableController, $arguments);
     }
 
-    public function firstStepAction(Request $request, string $flow_slug): Response
+    public function firstStepAction(string $flow_slug): Response
     {
         $flow = $this->flowRegistry->getFlowBySlug($flow_slug);
         $firstStep = $flow->getFirstStep();
-
-        $currentRoute = $request->get('_route');
-
         $router = $this->get('router');
         $firstStepLink = $router->generate(
-            $currentRoute,
+            'sd_multistep',
             ['flow_slug' => $flow_slug, 'step_slug' => $firstStep->getSlug()]
         );
 
