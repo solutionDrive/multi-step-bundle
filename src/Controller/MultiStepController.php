@@ -11,6 +11,7 @@ namespace solutionDrive\MultiStepBundle\Controller;
 
 use solutionDrive\MultiStepBundle\Registry\MultiStepFlowRegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
@@ -94,5 +95,18 @@ class MultiStepController extends Controller
         }
 
         return call_user_func_array($callableController, $arguments);
+    }
+
+    public function firstStepAction(string $flow_slug): Response
+    {
+        $flow = $this->flowRegistry->getFlowBySlug($flow_slug);
+        $firstStep = $flow->getFirstStep();
+        $router = $this->get('router');
+        $firstStepLink = $router->generate(
+            'sd_multistep',
+            ['flow_slug' => $flow_slug, 'step_slug' => $firstStep->getSlug()]
+        );
+
+        return new RedirectResponse($firstStepLink);
     }
 }
