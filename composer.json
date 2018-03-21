@@ -13,7 +13,7 @@
     "require-dev": {
         "behat/behat": "^3.4",
         "phpspec/phpspec": "^4.3",
-        "symplify/easy-coding-standard": "^3.2"
+        "solutiondrive/coding-standard": "^1.0"
     },
     "config": {
         "bin-dir": "bin"
