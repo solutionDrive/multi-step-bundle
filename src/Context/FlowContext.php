@@ -12,7 +12,7 @@ namespace solutionDrive\MultiStepBundle\Context;
 use solutionDrive\MultiStepBundle\Model\MultiStepFlowInterface;
 use solutionDrive\MultiStepBundle\Model\MultiStepInterface;
 
-class StepDirectionContext implements StepDirectionContextInterface
+class FlowContext implements FlowContextInterface
 {
     /**
      * @var MultiStepFlowInterface

@@ -11,12 +11,12 @@ namespace spec\solutionDrive\MultiStepBundle\Context;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use solutionDrive\MultiStepBundle\Context\StepDirectionContext;
-use solutionDrive\MultiStepBundle\Context\StepDirectionContextInterface;
+use solutionDrive\MultiStepBundle\Context\FlowContext;
+use solutionDrive\MultiStepBundle\Context\FlowContextInterface;
 use solutionDrive\MultiStepBundle\Model\MultiStepFlowInterface;
 use solutionDrive\MultiStepBundle\Model\MultiStepInterface;
 
-class StepDirectionContextSpec extends ObjectBehavior
+class FlowContextSpec extends ObjectBehavior
 {
     public function let(MultiStepFlowInterface $flow, MultiStepInterface $currentStep): void
     {
@@ -26,12 +26,12 @@ class StepDirectionContextSpec extends ObjectBehavior
 
     public function it_is_initializable(): void
     {
-        $this->shouldHaveType(StepDirectionContext::class);
+        $this->shouldHaveType(FlowContext::class);
     }
 
     public function it_implements_step_direction_context_interface(): void
     {
-        $this->shouldImplement(StepDirectionContextInterface::class);
+        $this->shouldImplement(FlowContextInterface::class);
     }
 
     public function it_returns_current_step(MultiStepInterface $currentStep): void

@@ -12,7 +12,7 @@ namespace solutionDrive\MultiStepBundle\Context;
 use solutionDrive\MultiStepBundle\Model\MultiStepFlowInterface;
 use solutionDrive\MultiStepBundle\Model\MultiStepInterface;
 
-interface StepDirectionContextInterface
+interface FlowContextInterface
 {
     public function getCurrentStep(): MultiStepInterface;
 
