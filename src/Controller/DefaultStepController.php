@@ -71,7 +71,7 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
      */
     public function redirectToNextStep(int $statusCode = 302): RedirectResponse
     {
-        return $this->redirectToStep($this->getNextStepLink(), $statusCode);
+        return $this->redirectToStep($this->getNextStep(), $statusCode);
     }
 
     /**
