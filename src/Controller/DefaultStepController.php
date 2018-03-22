@@ -20,13 +20,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultStepController extends Controller implements TemplateAwareControllerInterface, StepAwareInterface, FlowAwareInterface
+class DefaultStepController extends Controller implements TemplateAwareControllerInterface, FlowAwareInterface
 {
     /** @var string */
     private $template = 'MultiStepBundle::default_step.html.twig';
-
-    /** @var MultiStepFlowInterface */
-    private $flow;
 
     /** @var FlowContext */
     private $flowContext;
@@ -144,14 +141,9 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
         return $this->hasPreviousStep() ? $this->router->generateStepLink($this->getPreviousStep()) : null;
     }
 
-    public function getFlow(): ?MultiStepFlowInterface
+    public function getFlow(): MultiStepFlowInterface
     {
-        return $this->flow;
-    }
-
-    public function setFlow(?MultiStepFlowInterface $flow): void
-    {
-        $this->flow = $flow;
+        return $this->flowContext->getFlow();
     }
 
     public function getStep(): ?MultiStepInterface

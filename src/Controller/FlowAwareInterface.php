@@ -9,11 +9,30 @@ declare(strict_types=1);
 
 namespace solutionDrive\MultiStepBundle\Controller;
 
+use solutionDrive\MultiStepBundle\Context\FlowContextInterface;
 use solutionDrive\MultiStepBundle\Model\MultiStepFlowInterface;
+use solutionDrive\MultiStepBundle\Model\MultiStepInterface;
+use solutionDrive\MultiStepBundle\Router\MultistepRouterInterface;
 
 interface FlowAwareInterface
 {
-    public function getFlow(): ?MultiStepFlowInterface;
+    public function setFlowContext(FlowContextInterface $flowContext): void;
 
-    public function setFlow(?MultiStepFlowInterface $flow): void;
+    public function getFlowContext(): FlowContextInterface;
+
+    public function setRouter(MultistepRouterInterface $router): void;
+
+    public function getRouter(): MultistepRouterInterface;
+
+    public function getNextStep(): ?MultiStepInterface;
+
+    public function getNextStepLink(): ?string;
+
+    public function getPreviousStep(): ?MultiStepInterface;
+
+    public function getPreviousStepLink(): ?string;
+
+    public function getStep(): ?MultiStepInterface;
+
+    public function getFlow(): MultiStepFlowInterface;
 }
