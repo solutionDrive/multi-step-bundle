@@ -7,6 +7,9 @@ services:
     arguments:
       - "@sd.multistep.step_factory"
 
+  sd.multistep.flow_context_factory:
+    class: solutionDrive\MultiStepBundle\Factory\FlowContextFactory
+
   sd.multistep.flow_registry:
     class: solutionDrive\MultiStepBundle\Registry\MultiStepFlowRegistry
     arguments:
@@ -18,3 +21,4 @@ services:
       - "@sd.multistep.flow_registry"
       - "@controller_resolver"
       - "@argument_resolver"
+      - "@sd.multistep.flow_context_factory"
