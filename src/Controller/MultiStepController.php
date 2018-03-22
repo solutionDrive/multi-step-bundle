@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace solutionDrive\MultiStepBundle\Controller;
 
+use solutionDrive\MultiStepBundle\Factory\FlowContextFactoryInterface;
+use solutionDrive\MultiStepBundle\Factory\MultistepRouterFactoryInterface;
 use solutionDrive\MultiStepBundle\Registry\MultiStepFlowRegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class MultiStepController extends Controller
 {
@@ -28,26 +29,39 @@ class MultiStepController extends Controller
 
     /** @var ArgumentResolverInterface */
     private $argumentResolver;
+    /**
+     * @var FlowContextFactoryInterface
+     */
+    private $flowContextFactory;
+    /**
+     * @var MultistepRouterFactoryInterface
+     */
+    private $stepRouterFactory;
 
     public function __construct(
         MultiStepFlowRegistryInterface $flowRegistry,
         ControllerResolverInterface $controllerResolver,
-        ArgumentResolverInterface $argumentResolver
+        ArgumentResolverInterface $argumentResolver,
+        FlowContextFactoryInterface $flowContextFactory,
+        MultistepRouterFactoryInterface $stepRouterFactory
     ) {
         $this->flowRegistry = $flowRegistry;
         $this->controllerResolver = $controllerResolver;
         $this->argumentResolver = $argumentResolver;
+        $this->flowContextFactory = $flowContextFactory;
+        $this->stepRouterFactory = $stepRouterFactory;
     }
 
     public function stepAction(Request $request, string $flow_slug, string $step_slug): Response
     {
         $flow = $this->flowRegistry->getFlowBySlug($flow_slug);
-        $step = $flow->getStepBySlug($step_slug);
+        $flowContext = $this->flowContextFactory->create($flow, $step_slug);
+        $router = $this->stepRouterFactory->create($request, $flow_slug);
+
+        $step = $flowContext->getCurrentStep();
         $configuredController = $step->getControllerAction();
 
         $request->attributes->set('_controller', $configuredController);
-
-        $currentRoute = $request->get('_route');
 
         $callableController = $this->controllerResolver->getController($request);
         $arguments = $this->argumentResolver->getArguments($request, $callableController);
@@ -59,29 +73,10 @@ class MultiStepController extends Controller
             $controller->setTemplate($step->getTemplate());
         }
 
-        // set previous and next steps
-        if ($controller instanceof StepDirectionAwareInterface) {
-            /** @var RouterInterface $router */
-            $router = $this->get('router');
-            $nextStep = $flow->getStepAfter($step);
-            $previousStep = $flow->getStepBefore($step);
-
-            if (null !== $nextStep) {
-                $nextStepLink = $router->generate(
-                    $currentRoute,
-                    ['flow_slug' => $flow_slug, 'step_slug' => $nextStep->getSlug()]
-                );
-                $controller->setNextStep($nextStep);
-                $controller->setNextStepLink($nextStepLink);
-            }
-            if (null !== $previousStep) {
-                $previousStepLink = $router->generate(
-                    $currentRoute,
-                    ['flow_slug' => $flow_slug, 'step_slug' => $previousStep->getSlug()]
-                );
-                $controller->setPreviousStep($previousStep);
-                $controller->setPreviousStepLink($previousStepLink);
-            }
+        // set flow context
+        if ($controller instanceof StepAwareInterface) {
+            $controller->setFlowContext($flowContext);
+            $controller->setRouter($router);
         }
 
         // set flow
@@ -89,10 +84,6 @@ class MultiStepController extends Controller
             $controller->setFlow($flow);
         }
 
-        // set step
-        if ($controller instanceof StepAwareInterface) {
-            $controller->setStep($step);
-        }
 
         return call_user_func_array($callableController, $arguments);
     }
