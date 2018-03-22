@@ -41,3 +41,5 @@
 **/Entity/*~
 
 /vendor/
+
+composer.lock

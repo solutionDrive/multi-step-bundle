@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3562085f2b3ea802e15773fc0862eaf",
+    "content-hash": "9821fdaabe8d1fb7cce0da282f2127e4",
     "packages": [],
     "packages-dev": [
         {
@@ -1917,16 +1917,16 @@
         },
         {
             "name": "solutiondrive/coding-standard",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/solutionDrive/CodingStandard.git",
-                "reference": "6a7db0f732b0d22eb0687533fe9229caa972f159"
+                "reference": "6ed07ca1502329ef05f4395e8d94bdca984f31bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/solutionDrive/CodingStandard/zipball/6a7db0f732b0d22eb0687533fe9229caa972f159",
-                "reference": "6a7db0f732b0d22eb0687533fe9229caa972f159",
+                "url": "https://api.github.com/repos/solutionDrive/CodingStandard/zipball/6ed07ca1502329ef05f4395e8d94bdca984f31bc",
+                "reference": "6ed07ca1502329ef05f4395e8d94bdca984f31bc",
                 "shasum": ""
             },
             "require": {
@@ -1939,7 +1939,7 @@
                 "MIT"
             ],
             "description": "solutionDrive coding standard.",
-            "time": "2018-03-15T08:59:35+00:00"
+            "time": "2018-03-21T15:01:15+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -1994,7 +1994,7 @@
         },
         {
             "name": "symfony/class-loader",
-            "version": "v3.4.4",
+            "version": "v3.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/class-loader.git",
@@ -2932,16 +2932,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v4.0.4",
+            "version": "v4.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "a9c4e4cc56f7eff0960c4f6c157da8f6b13211fc"
+                "reference": "e20a9b7f9f62cb33a11638b345c248e7d510c938"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/a9c4e4cc56f7eff0960c4f6c157da8f6b13211fc",
-                "reference": "a9c4e4cc56f7eff0960c4f6c157da8f6b13211fc",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/e20a9b7f9f62cb33a11638b345c248e7d510c938",
+                "reference": "e20a9b7f9f62cb33a11638b345c248e7d510c938",
                 "shasum": ""
             },
             "require": {
@@ -2996,7 +2996,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-18T22:19:33+00:00"
+            "time": "2018-02-22T10:50:29+00:00"
         },
         {
             "name": "symfony/yaml",
