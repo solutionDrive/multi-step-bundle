@@ -10,6 +10,11 @@ services:
   sd.multistep.flow_context_factory:
     class: solutionDrive\MultiStepBundle\Factory\FlowContextFactory
 
+  sd.multistep.step_router_factory:
+    class: solutionDrive\MultiStepBundle\Factory\MultistepRouterFactory
+    arguments:
+      - "@router"
+
   sd.multistep.flow_registry:
     class: solutionDrive\MultiStepBundle\Registry\MultiStepFlowRegistry
     arguments:
