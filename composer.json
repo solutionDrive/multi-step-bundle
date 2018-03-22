@@ -14,7 +14,7 @@
         "behat/behat": "^3.4",
         "phpspec/phpspec": "^4.3",
         "solutiondrive/coding-standard": "^1.0",
-        "symfony/http-foundation": "^3.0 || ^4.0"
+        "symfony/routing": "^3.0 || ^4.0"
     },
     "config": {
         "bin-dir": "bin"
