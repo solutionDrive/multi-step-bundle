@@ -9,12 +9,14 @@
             "email": "entwickler@solutiondrive.de"
         }
     ],
-    "require": {},
+    "require": {
+        "symfony/routing": "^3.0 || ^4.0",
+        "symfony/framework-bundle": "^3.0 || ^4.0"
+    },
     "require-dev": {
         "behat/behat": "^3.4",
         "phpspec/phpspec": "^4.3",
-        "solutiondrive/coding-standard": "^1.0",
-        "symfony/routing": "^3.0 || ^4.0"
+        "solutiondrive/coding-standard": "^1.0"
     },
     "config": {
         "bin-dir": "bin"
