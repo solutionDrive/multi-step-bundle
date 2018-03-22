@@ -74,14 +74,9 @@ class MultiStepController extends Controller
         }
 
         // set flow context
-        if ($controller instanceof StepAwareInterface) {
+        if ($controller instanceof FlowAwareInterface) {
             $controller->setFlowContext($flowContext);
             $controller->setRouter($router);
-        }
-
-        // set flow
-        if ($controller instanceof FlowAwareInterface) {
-            $controller->setFlow($flow);
         }
 
         return call_user_func_array($callableController, $arguments);
