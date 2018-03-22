@@ -12,7 +12,6 @@ namespace solutionDrive\MultiStepBundle\Controller;
 use solutionDrive\MultiStepBundle\Context\FlowContext;
 use solutionDrive\MultiStepBundle\Context\FlowContextInterface;
 use solutionDrive\MultiStepBundle\Exception\NoNextOrPreviousStepException;
-use solutionDrive\MultiStepBundle\Model\MultiStepFlowInterface;
 use solutionDrive\MultiStepBundle\Model\MultiStepInterface;
 use solutionDrive\MultiStepBundle\Router\MultistepRouterInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -33,14 +32,6 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
 
     public function renderAction(Request $request): Response
     {
-        // Enable simple navigation
-        if ('next' === $request->get('navigate_to_direction')) {
-            return $this->redirectToNextStep();
-        } elseif ('previous' === $request->get('navigate_to_direction')) {
-            return $this->redirectToPreviousStep();
-        }
-
-        // Render template for current step
         return $this->render($this->getTemplate(), $this->getTemplateVariables());
     }
 
@@ -53,12 +44,8 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
     public function getTemplateVariables(): array
     {
         return [
-            'flow' => $this->getFlow(),
-            'step' => $this->getStep(),
-            'hasNextStep' => $this->hasNextStep(),
-            'hasPreviousStep' => $this->hasPreviousStep(),
-            'nextStepLink' => $this->getNextStepLink(),
-            'previousStepLink' => $this->getPreviousStepLink(),
+            'flow' => $this->flowContext->getFlow(),
+            'step' => $this->flowContext->getCurrentStep(),
         ];
     }
 
@@ -89,22 +76,6 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
     }
 
     /**
-     * Returns true if there is a next step in the flow.
-     */
-    public function hasNextStep(): bool
-    {
-        return $this->flowContext->hasNextStep();
-    }
-
-    /**
-     * Returns true if there is a previous step in the flow.
-     */
-    public function hasPreviousStep(): bool
-    {
-        return $this->flowContext->hasPreviousStep();
-    }
-
-    /**
      * Returns the configured template.
      * Can be overriden in step definition, see README.md for details.
      */
@@ -129,26 +100,6 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
     public function getPreviousStep(): ?MultiStepInterface
     {
         return $this->flowContext->getPreviousStep();
-    }
-
-    public function getNextStepLink(): ?string
-    {
-        return $this->hasNextStep() ? $this->router->generateStepLink($this->getNextStep()) : null;
-    }
-
-    public function getPreviousStepLink(): ?string
-    {
-        return $this->hasPreviousStep() ? $this->router->generateStepLink($this->getPreviousStep()) : null;
-    }
-
-    public function getFlow(): MultiStepFlowInterface
-    {
-        return $this->flowContext->getFlow();
-    }
-
-    public function getStep(): ?MultiStepInterface
-    {
-        return $this->flowContext->getCurrentStep();
     }
 
     public function getFlowContext(): FlowContextInterface
