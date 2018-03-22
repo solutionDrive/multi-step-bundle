@@ -84,7 +84,6 @@ class MultiStepController extends Controller
             $controller->setFlow($flow);
         }
 
-
         return call_user_func_array($callableController, $arguments);
     }
 

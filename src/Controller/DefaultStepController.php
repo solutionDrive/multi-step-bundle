@@ -83,8 +83,7 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
         return $this->redirectToStep($this->getPreviousStep(), $statusCode);
     }
 
-
-    protected function redirectToStep(MultiStepInterface $step, int $statusCode)
+    protected function redirectToStep(MultiStepInterface $step, int $statusCode): RedirectResponse
     {
         if (null === $step) {
             throw new NoNextOrPreviousStepException();
@@ -139,7 +138,6 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
     {
         return $this->hasNextStep() ? $this->router->generateStepLink($this->getNextStep()) : null;
     }
-
 
     public function getPreviousStepLink(): ?string
     {

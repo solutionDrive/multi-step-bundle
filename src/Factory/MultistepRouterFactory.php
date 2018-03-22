@@ -1,13 +1,10 @@
 <?php
 declare(strict_types=1);
 
-/**
- * Created by solutionDrive GmbH.
+/*
+ * Created by solutionDrive GmbH
  *
- * @author: Tobias Wojtylak <tw@solutiondrive.de>
- * @date: 22.03.18
- * @time: 11:22
- * @copyright: 2018 solutionDrive GmbH
+ * @copyright 2018 solutionDrive GmbH
  */
 
 namespace solutionDrive\MultiStepBundle\Factory;
