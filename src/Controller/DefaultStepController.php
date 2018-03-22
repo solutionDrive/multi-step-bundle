@@ -9,47 +9,29 @@ declare(strict_types=1);
 
 namespace solutionDrive\MultiStepBundle\Controller;
 
+use solutionDrive\MultiStepBundle\Context\FlowContext;
+use solutionDrive\MultiStepBundle\Context\FlowContextInterface;
 use solutionDrive\MultiStepBundle\Exception\NoNextOrPreviousStepException;
-use solutionDrive\MultiStepBundle\Model\MultiStepFlowInterface;
 use solutionDrive\MultiStepBundle\Model\MultiStepInterface;
+use solutionDrive\MultiStepBundle\Router\MultistepRouterInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultStepController extends Controller implements TemplateAwareControllerInterface, StepDirectionAwareInterface, FlowAwareInterface, StepAwareInterface
+class DefaultStepController extends Controller implements TemplateAwareControllerInterface, FlowAwareInterface
 {
     /** @var string */
     private $template = 'MultiStepBundle::default_step.html.twig';
 
-    /** @var MultiStepFlowInterface */
-    private $flow;
+    /** @var FlowContext */
+    private $flowContext;
 
-    /** @var MultiStepInterface */
-    private $step;
-
-    /** @var MultiStepInterface|null */
-    private $previousStep;
-
-    /** @var MultiStepInterface|null */
-    private $nextStep;
-
-    /** @var string|null */
-    private $previousStepLink;
-
-    /** @var string|null */
-    private $nextStepLink;
+    /** @var MultistepRouterInterface */
+    private $router;
 
     public function renderAction(Request $request): Response
     {
-        // Enable simple navigation
-        if ('next' === $request->get('navigate_to_direction')) {
-            return $this->redirectToNextStep();
-        } elseif ('previous' === $request->get('navigate_to_direction')) {
-            return $this->redirectToPreviousStep();
-        }
-
-        // Render template for current step
         return $this->render($this->getTemplate(), $this->getTemplateVariables());
     }
 
@@ -62,12 +44,8 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
     public function getTemplateVariables(): array
     {
         return [
-            'flow' => $this->getFlow(),
-            'step' => $this->getStep(),
-            'hasNextStep' => $this->hasNextStep(),
-            'hasPreviousStep' => $this->hasPreviousStep(),
-            'nextStepLink' => $this->getNextStepLink(),
-            'previousStepLink' => $this->getPreviousStepLink(),
+            'flow' => $this->flowContext->getFlow(),
+            'step' => $this->flowContext->getCurrentStep(),
         ];
     }
 
@@ -77,10 +55,7 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
      */
     public function redirectToNextStep(int $statusCode = 302): RedirectResponse
     {
-        if (null === $this->nextStepLink) {
-            throw new NoNextOrPreviousStepException();
-        }
-        return $this->redirect($this->nextStepLink, $statusCode);
+        return $this->redirectToStep($this->getNextStep(), $statusCode);
     }
 
     /**
@@ -89,26 +64,15 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
      */
     public function redirectToPreviousStep(int $statusCode = 302): RedirectResponse
     {
-        if (null === $this->previousStepLink) {
+        return $this->redirectToStep($this->getPreviousStep(), $statusCode);
+    }
+
+    protected function redirectToStep(MultiStepInterface $step, int $statusCode): RedirectResponse
+    {
+        if (null === $step) {
             throw new NoNextOrPreviousStepException();
         }
-        return $this->redirect($this->previousStepLink, $statusCode);
-    }
-
-    /**
-     * Returns true if there is a next step in the flow.
-     */
-    public function hasNextStep(): bool
-    {
-        return null !== $this->nextStep;
-    }
-
-    /**
-     * Returns true if there is a previous step in the flow.
-     */
-    public function hasPreviousStep(): bool
-    {
-        return null !== $this->previousStep;
+        return $this->redirect($this->router->generateStepLink($step), $statusCode);
     }
 
     /**
@@ -130,61 +94,31 @@ class DefaultStepController extends Controller implements TemplateAwareControlle
 
     public function getNextStep(): ?MultiStepInterface
     {
-        return $this->nextStep;
-    }
-
-    public function setNextStep(?MultiStepInterface $step): void
-    {
-        $this->nextStep = $step;
+        return $this->flowContext->getNextStep();
     }
 
     public function getPreviousStep(): ?MultiStepInterface
     {
-        return $this->previousStep;
+        return $this->flowContext->getPreviousStep();
     }
 
-    public function setPreviousStep(?MultiStepInterface $step): void
+    public function getFlowContext(): FlowContextInterface
     {
-        $this->previousStep = $step;
+        return $this->flowContext;
     }
 
-    public function getNextStepLink(): ?string
+    public function setFlowContext(FlowContextInterface $flowContext): void
     {
-        return $this->nextStepLink;
+        $this->flowContext = $flowContext;
     }
 
-    public function setNextStepLink(?string $link): void
+    public function setRouter(MultistepRouterInterface $router): void
     {
-        $this->nextStepLink = $link;
+        $this->router = $router;
     }
 
-    public function getPreviousStepLink(): ?string
+    public function getRouter(): MultistepRouterInterface
     {
-        return $this->previousStepLink;
-    }
-
-    public function setPreviousStepLink(?string $link): void
-    {
-        $this->previousStepLink = $link;
-    }
-
-    public function getFlow(): ?MultiStepFlowInterface
-    {
-        return $this->flow;
-    }
-
-    public function setFlow(?MultiStepFlowInterface $flow): void
-    {
-        $this->flow = $flow;
-    }
-
-    public function getStep(): ?MultiStepInterface
-    {
-        return $this->step;
-    }
-
-    public function setStep(?MultiStepInterface $step): void
-    {
-        $this->step = $step;
+        return $this->router;
     }
 }
