@@ -29,13 +29,11 @@ class MultiStepController extends Controller
 
     /** @var ArgumentResolverInterface */
     private $argumentResolver;
-    /**
-     * @var FlowContextFactoryInterface
-     */
+
+    /** @var FlowContextFactoryInterface */
     private $flowContextFactory;
-    /**
-     * @var MultistepRouterFactoryInterface
-     */
+
+    /** @var MultistepRouterFactoryInterface */
     private $stepRouterFactory;
 
     public function __construct(

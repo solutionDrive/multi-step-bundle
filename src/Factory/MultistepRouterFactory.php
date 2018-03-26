@@ -16,9 +16,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class MultistepRouterFactory implements MultistepRouterFactoryInterface
 {
-    /**
-     * @var RouterInterface
-     */
+    /** @var RouterInterface */
     private $router;
 
     public function __construct(RouterInterface $router)

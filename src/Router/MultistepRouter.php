@@ -15,17 +15,13 @@ use Symfony\Component\Routing\RouterInterface;
 
 class MultistepRouter implements MultistepRouterInterface
 {
-    /**
-     * @var RouterInterface
-     */
+    /** @var RouterInterface */
     private $router;
-    /**
-     * @var string
-     */
+
+    /** @var string */
     private $flowSlug;
-    /**
-     * @var Request
-     */
+
+    /** @var Request */
     private $request;
 
     public function __construct(RouterInterface $router, Request $request, string $flowSlug)
