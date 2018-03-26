@@ -14,14 +14,10 @@ use solutionDrive\MultiStepBundle\Model\MultiStepInterface;
 
 class FlowContext implements FlowContextInterface
 {
-    /**
-     * @var MultiStepFlowInterface
-     */
+    /** @var MultiStepFlowInterface */
     private $flow;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $currentStepSlug;
 
     public function __construct(MultiStepFlowInterface $flow, string $currentStepSlug)
