@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace solutionDrive\MultiStepBundle\DependencyInjection;
 
-use solutionDrive\MultiStepBundle\StepChecker\DefaultStepRequiredChecker;
-use solutionDrive\MultiStepBundle\StepChecker\StepRequiredCheckerInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -43,8 +41,7 @@ class Configuration implements ConfigurationInterface
                                         ->end()
                                         ->booleanNode('skippable')->defaultFalse()->end()
                                         ->scalarNode('stepRequiredChecker')
-                                            ->prototype(StepRequiredCheckerInterface::class)
-                                            ->default(new DefaultStepRequiredChecker())
+                                            ->default('sd.multistep.step_checker.default')
                                         ->end()
                                     ->end()
                                 ->end()

@@ -12,6 +12,7 @@ namespace solutionDrive\MultiStepBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class MultiStepExtension extends Extension
@@ -38,8 +39,22 @@ class MultiStepExtension extends Extension
     private function parseFlows(array $flowsArray, ContainerBuilder $container): void
     {
         $registryDefinition = $container->getDefinition('sd.multistep.flow_registry');
-        foreach ($flowsArray as $id => $config) {
-            $registryDefinition->addMethodCall('addByConfig', [$id, $config]);
+        foreach ($flowsArray as $id => $stepConfig) {
+            $stepConfig = $this->getStepOptions($stepConfig);
+            $registryDefinition->addMethodCall('addByConfig', [$id, $stepConfig]);
         }
+    }
+
+    /**
+     * @param string[] $stepConfig
+     */
+    private function getStepOptions(array $stepConfig)
+    {
+        $options = $stepConfig;
+        if (isset($options['stepRequiredChecker'])) {
+            $options['stepRequiredChecker'] = new Reference($options['stepRequiredChecker']);
+            unset($options['stepRequiredChecker']);
+        }
+        return $options;
     }
 }
