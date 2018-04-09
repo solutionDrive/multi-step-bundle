@@ -26,6 +26,7 @@ class MultiStepFactorySpec extends ObjectBehavior
             'slug'          => 'TestSlug',
             'template'      => 'TestTemplate',
             'controller'    => 'TestController',
+            'skippable'     => true,
         ];
 
         $step = $this->createFromConfig('test_id', $config);
@@ -34,5 +35,6 @@ class MultiStepFactorySpec extends ObjectBehavior
         $step->getSlug()->shouldReturn('TestSlug');
         $step->getTemplate()->shouldReturn('TestTemplate');
         $step->getControllerAction()->shouldReturn('TestController');
+        $step->isSkippable()->shouldReturn(true);
     }
 }
