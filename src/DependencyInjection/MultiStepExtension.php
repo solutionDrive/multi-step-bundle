@@ -39,9 +39,9 @@ class MultiStepExtension extends Extension
     private function parseFlows(array $flowsArray, ContainerBuilder $container): void
     {
         $registryDefinition = $container->getDefinition('sd.multistep.flow_registry');
-        foreach ($flowsArray as $id => $stepConfig) {
-            $stepConfig = $this->getStepOptions($stepConfig);
-            $registryDefinition->addMethodCall('addByConfig', [$id, $stepConfig]);
+        foreach ($flowsArray as $id => $flowConfig) {
+            $flowConfig['steps'] = array_map([$this, 'getStepOption'], $flowConfig['steps']);
+            $registryDefinition->addMethodCall('addByConfig', [$id, $flowConfig]);
         }
     }
 
@@ -50,12 +50,11 @@ class MultiStepExtension extends Extension
      *
      * @return string[]
      */
-    private function getStepOptions(array $stepConfig): array
+    private function getStepOption(array $stepConfig): array
     {
         $options = $stepConfig;
         if (isset($options['stepRequiredChecker'])) {
             $options['stepRequiredChecker'] = new Reference($options['stepRequiredChecker']);
-            unset($options['stepRequiredChecker']);
         }
         return $options;
     }
