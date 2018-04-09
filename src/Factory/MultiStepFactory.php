@@ -26,7 +26,6 @@ class MultiStepFactory
         $step->setSlug($config['slug']);
         $step->setTemplate($config['template']);
         $step->setControllerAction($config['controller']);
-        $step->setSkippable((bool) $config['skippable']);
         $step->setStepRequiredChecker($config['stepRequiredChecker']);
         return $step;
     }

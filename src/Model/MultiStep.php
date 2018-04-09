@@ -28,9 +28,6 @@ class MultiStep implements MultiStepInterface
     /** @var string */
     private $controllerAction = '';
 
-    /** @var bool */
-    private $skippable = false;
-
     /** @var StepRequiredCheckerInterface */
     private $stepRequiredChecker;
 
@@ -82,16 +79,6 @@ class MultiStep implements MultiStepInterface
     public function setControllerAction(string $controllerAction): void
     {
         $this->controllerAction = $controllerAction;
-    }
-
-    public function isSkippable(): bool
-    {
-        return $this->skippable;
-    }
-
-    public function setSkippable(bool $skippable): void
-    {
-        $this->skippable = $skippable;
     }
 
     public function getStepRequiredChecker(): StepRequiredCheckerInterface
