@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace solutionDrive\MultiStepBundle\Model;
 
+use solutionDrive\MultiStepBundle\StepChecker\StepRequiredCheckerInterface;
+
 class MultiStep implements MultiStepInterface
 {
     /** @var string */
@@ -28,6 +30,9 @@ class MultiStep implements MultiStepInterface
 
     /** @var bool */
     private $skippable = false;
+
+    /** @var StepRequiredCheckerInterface */
+    private $stepRequiredChecker;
 
     public function getId(): string
     {
@@ -87,5 +92,15 @@ class MultiStep implements MultiStepInterface
     public function setSkippable(bool $skippable): void
     {
         $this->skippable = $skippable;
+    }
+
+    public function getStepRequiredChecker(): StepRequiredCheckerInterface
+    {
+        return $this->stepRequiredChecker;
+    }
+
+    public function setStepRequiredChecker(StepRequiredCheckerInterface $stepRequiredChecker): void
+    {
+        $this->stepRequiredChecker = $stepRequiredChecker;
     }
 }

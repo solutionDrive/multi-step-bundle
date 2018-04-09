@@ -33,4 +33,8 @@ interface MultiStepInterface
     public function isSkippable(): bool;
 
     public function setSkippable(bool $skippable): void;
+
+    public function getStepRequiredChecker(): StepRequiredCheckerInterface;
+
+    public function setStepRequiredChecker(StepRequiredCheckerInterface $stepRequiredChecker): void;
 }
