@@ -47,8 +47,10 @@ class MultiStepExtension extends Extension
 
     /**
      * @param string[] $stepConfig
+     *
+     * @return string[]
      */
-    private function getStepOptions(array $stepConfig)
+    private function getStepOptions(array $stepConfig): array
     {
         $options = $stepConfig;
         if (isset($options['stepRequiredChecker'])) {
