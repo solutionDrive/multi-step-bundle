@@ -3,7 +3,6 @@
 namespace spec\solutionDrive\MultiStepBundle\StepChecker;
 
 use PhpSpec\ObjectBehavior;
-use solutionDrive\MultiStepBundle\Context\FlowContextInterface;
 use solutionDrive\MultiStepBundle\StepChecker\DefaultStepRequiredChecker;
 use solutionDrive\MultiStepBundle\StepChecker\StepRequiredCheckerInterface;
 
@@ -19,8 +18,8 @@ class DefaultStepRequiredCheckerSpec extends ObjectBehavior
         $this->shouldImplement(StepRequiredCheckerInterface::class);
     }
 
-    function it_returns_true(FlowContextInterface $flowContext)
+    function it_returns_true()
     {
-        $this->check($flowContext)->shouldReturn(true);
+        $this->check()->shouldReturn(true);
     }
 }

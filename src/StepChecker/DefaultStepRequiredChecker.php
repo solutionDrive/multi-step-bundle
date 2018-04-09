@@ -9,11 +9,9 @@ declare(strict_types=1);
 
 namespace solutionDrive\MultiStepBundle\StepChecker;
 
-use solutionDrive\MultiStepBundle\Context\FlowContextInterface;
-
 class DefaultStepRequiredChecker implements StepRequiredCheckerInterface
 {
-    public function check(FlowContextInterface $flowContext): bool
+    public function check(): bool
     {
         return true;
     }
