@@ -40,22 +40,13 @@ class MultiStepExtension extends Extension
     {
         $registryDefinition = $container->getDefinition('sd.multistep.flow_registry');
         foreach ($flowsArray as $id => $flowConfig) {
-            $flowConfig['steps'] = array_map([$this, 'getStepOption'], $flowConfig['steps']);
+            $flowConfig['steps'] = array_map(function (array $options): array {
+                if (isset($options['stepRequiredChecker'])) {
+                    $options['stepRequiredChecker'] = new Reference($options['stepRequiredChecker']);
+                }
+                return $options;
+            }, $flowConfig['steps']);
             $registryDefinition->addMethodCall('addByConfig', [$id, $flowConfig]);
         }
-    }
-
-    /**
-     * @param string[] $stepConfig
-     *
-     * @return string[]
-     */
-    private function getStepOption(array $stepConfig): array
-    {
-        $options = $stepConfig;
-        if (isset($options['stepRequiredChecker'])) {
-            $options['stepRequiredChecker'] = new Reference($options['stepRequiredChecker']);
-        }
-        return $options;
     }
 }

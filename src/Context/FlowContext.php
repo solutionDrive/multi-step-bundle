@@ -37,7 +37,7 @@ class FlowContext implements FlowContextInterface
         do {
             $nextStep = $this->flow->getStepAfter($currentStep);
             $currentStep = $nextStep;
-        } while (null !== $nextStep && $nextStep->getStepRequiredChecker()->check() === false);
+        } while (null !== $nextStep && false === $nextStep->getStepRequiredChecker()->check());
 
         return $nextStep;
     }
@@ -48,7 +48,7 @@ class FlowContext implements FlowContextInterface
         do {
             $previousStep = $this->flow->getStepBefore($currentStep);
             $currentStep = $previousStep;
-        } while (null !== $previousStep && $previousStep->getStepRequiredChecker()->check() === false);
+        } while (null !== $previousStep && false === $previousStep->getStepRequiredChecker()->check());
 
         return $previousStep;
     }
