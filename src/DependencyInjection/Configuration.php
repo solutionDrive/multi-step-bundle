@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
                                         ->end()
                                         ->booleanNode('skippable')->defaultFalse()->end()
                                         ->scalarNode('stepRequiredChecker')
-                                            ->default('sd.multistep.step_checker.default')
+                                            ->defaultValue('sd.multistep.step_checker.default')
                                         ->end()
                                     ->end()
                                 ->end()
