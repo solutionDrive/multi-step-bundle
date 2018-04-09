@@ -12,6 +12,7 @@ namespace spec\solutionDrive\MultiStepBundle\Model;
 use PhpSpec\ObjectBehavior;
 use solutionDrive\MultiStepBundle\Model\MultiStep;
 use solutionDrive\MultiStepBundle\Model\MultiStepInterface;
+use solutionDrive\MultiStepBundle\StepChecker\StepRequiredCheckerInterface;
 
 final class MultiStepSpec extends ObjectBehavior
 {
@@ -69,5 +70,11 @@ final class MultiStepSpec extends ObjectBehavior
     {
         $this->setSkippable(true);
         $this->isSkippable()->shouldReturn(true);
+    }
+
+    function it_has_step_required_checker(StepRequiredCheckerInterface $stepRequiredChecker)
+    {
+        $this->setStepRequiredChecker($stepRequiredChecker);
+        $this->getStepRequiredChecker()->shouldBe($stepRequiredChecker);
     }
 }
