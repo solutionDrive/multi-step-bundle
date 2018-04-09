@@ -29,4 +29,8 @@ interface MultiStepInterface
     public function getControllerAction(): string;
 
     public function setControllerAction(string $controllerAction): void;
+
+    public function isSkippable(): bool;
+
+    public function setSkippable(bool $skippable): void;
 }

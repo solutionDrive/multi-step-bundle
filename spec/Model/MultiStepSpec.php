@@ -59,4 +59,15 @@ final class MultiStepSpec extends ObjectBehavior
         $this->setControllerAction($value);
         $this->getControllerAction()->shouldReturn($value);
     }
+
+    function it_is_not_skippable()
+    {
+        $this->isSkippable()->shouldReturn(false);
+    }
+
+    function it_is_skippable()
+    {
+        $this->setSkippable(true);
+        $this->isSkippable()->shouldReturn(true);
+    }
 }

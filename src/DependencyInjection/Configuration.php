@@ -39,6 +39,7 @@ class Configuration implements ConfigurationInterface
                                                 'solutionDrive\MultiStepBundle\Controller\DefaultStepController::renderAction'
                                             )
                                         ->end()
+                                        ->scalarNode('skippable')->defaultFalse()->end()
                                     ->end()
                                 ->end()
                             ->end()
