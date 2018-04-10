@@ -39,6 +39,9 @@ class Configuration implements ConfigurationInterface
                                                 'solutionDrive\MultiStepBundle\Controller\DefaultStepController::renderAction'
                                             )
                                         ->end()
+                                        ->scalarNode('stepRequiredChecker')
+                                            ->defaultValue('sd.multistep.step_checker.default')
+                                        ->end()
                                     ->end()
                                 ->end()
                             ->end()

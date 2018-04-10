@@ -34,13 +34,23 @@ class FlowContext implements FlowContextInterface
     public function getNextStep(): ?MultiStepInterface
     {
         $currentStep = $this->getCurrentStep();
-        return $this->flow->getStepAfter($currentStep);
+        do {
+            $nextStep = $this->flow->getStepAfter($currentStep);
+            $currentStep = $nextStep;
+        } while (null !== $nextStep && false === $nextStep->getStepRequiredChecker()->check());
+
+        return $nextStep;
     }
 
     public function getPreviousStep(): ?MultiStepInterface
     {
         $currentStep = $this->getCurrentStep();
-        return $this->flow->getStepBefore($currentStep);
+        do {
+            $previousStep = $this->flow->getStepBefore($currentStep);
+            $currentStep = $previousStep;
+        } while (null !== $previousStep && false === $previousStep->getStepRequiredChecker()->check());
+
+        return $previousStep;
     }
 
     public function hasNextStep(): bool

@@ -8,6 +8,8 @@
 
 namespace solutionDrive\MultiStepBundle\Model;
 
+use solutionDrive\MultiStepBundle\StepChecker\StepRequiredCheckerInterface;
+
 interface MultiStepInterface
 {
     public function getId(): string;
@@ -29,4 +31,8 @@ interface MultiStepInterface
     public function getControllerAction(): string;
 
     public function setControllerAction(string $controllerAction): void;
+
+    public function getStepRequiredChecker(): StepRequiredCheckerInterface;
+
+    public function setStepRequiredChecker(StepRequiredCheckerInterface $stepRequiredChecker): void;
 }

@@ -28,3 +28,6 @@ services:
       - "@argument_resolver"
       - "@sd.multistep.flow_context_factory"
       - "@sd.multistep.step_router_factory"
+
+  sd.multistep.step_checker.default:
+    class: solutionDrive\MultiStepBundle\StepChecker\DefaultStepRequiredChecker

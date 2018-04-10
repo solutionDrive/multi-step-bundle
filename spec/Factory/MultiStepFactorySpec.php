@@ -11,6 +11,7 @@ namespace spec\solutionDrive\MultiStepBundle\Factory;
 
 use PhpSpec\ObjectBehavior;
 use solutionDrive\MultiStepBundle\Factory\MultiStepFactory;
+use solutionDrive\MultiStepBundle\StepChecker\StepRequiredCheckerInterface;
 
 class MultiStepFactorySpec extends ObjectBehavior
 {
@@ -19,13 +20,14 @@ class MultiStepFactorySpec extends ObjectBehavior
         $this->shouldBeAnInstanceOf(MultiStepFactory::class);
     }
 
-    function it_can_create_step()
+    function it_can_create_step(StepRequiredCheckerInterface $stepRequiredChecker)
     {
         $config = [
-            'alias'         => 'TestAlias',
-            'slug'          => 'TestSlug',
-            'template'      => 'TestTemplate',
-            'controller'    => 'TestController',
+            'alias'               => 'TestAlias',
+            'slug'                => 'TestSlug',
+            'template'            => 'TestTemplate',
+            'controller'          => 'TestController',
+            'stepRequiredChecker' => $stepRequiredChecker
         ];
 
         $step = $this->createFromConfig('test_id', $config);
@@ -34,5 +36,6 @@ class MultiStepFactorySpec extends ObjectBehavior
         $step->getSlug()->shouldReturn('TestSlug');
         $step->getTemplate()->shouldReturn('TestTemplate');
         $step->getControllerAction()->shouldReturn('TestController');
+        $step->getStepRequiredChecker()->shouldReturn($stepRequiredChecker);
     }
 }

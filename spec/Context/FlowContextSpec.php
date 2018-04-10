@@ -15,6 +15,7 @@ use solutionDrive\MultiStepBundle\Context\FlowContext;
 use solutionDrive\MultiStepBundle\Context\FlowContextInterface;
 use solutionDrive\MultiStepBundle\Model\MultiStepFlowInterface;
 use solutionDrive\MultiStepBundle\Model\MultiStepInterface;
+use solutionDrive\MultiStepBundle\StepChecker\StepRequiredCheckerInterface;
 
 class FlowContextSpec extends ObjectBehavior
 {
@@ -39,16 +40,67 @@ class FlowContextSpec extends ObjectBehavior
         $this->getCurrentStep()->shouldBe($currentStep);
     }
 
-    public function it_returns_next_step(MultiStepFlowInterface $flow, MultiStepInterface $nextStep): void
-    {
+    public function it_returns_direct_successor_as_next_step(
+        MultiStepFlowInterface $flow,
+        MultiStepInterface $nextStep,
+        StepRequiredCheckerInterface $stepRequiredChecker
+    ): void {
+        $stepRequiredChecker->check()->shouldBeCalled()->willReturn(true);
+        $nextStep->getStepRequiredChecker()->willReturn($stepRequiredChecker);
         $flow->getStepAfter(Argument::any())->shouldBeCalled()->willReturn($nextStep);
         $this->getNextStep()->shouldBe($nextStep);
     }
 
-    public function it_returns_previous_step(MultiStepFlowInterface $flow, MultiStepInterface $previousStep): void
+    public function it_returns_step_after_successor_as_next_step(
+        MultiStepFlowInterface $flow,
+        MultiStepInterface $currentStep,
+        MultiStepInterface $nextStep,
+        MultiStepInterface $nextStepAfter,
+        StepRequiredCheckerInterface $stepRequiredCheckerNext,
+        StepRequiredCheckerInterface $stepRequiredCheckerAfterNext
+    ): void {
+
+        $stepRequiredCheckerNext->check()->shouldBeCalled()->willReturn(false);
+        $nextStep->getStepRequiredChecker()->willReturn($stepRequiredCheckerNext);
+
+        $stepRequiredCheckerAfterNext->check()->shouldBeCalled()->willReturn(true);
+        $nextStepAfter->getStepRequiredChecker()->willReturn($stepRequiredCheckerAfterNext);
+
+        $flow->getStepAfter($currentStep)->shouldBeCalled()->willReturn($nextStep);
+        $flow->getStepAfter($nextStep)->shouldBeCalled()->willReturn($nextStepAfter);
+        $this->getNextStep()->shouldBe($nextStepAfter);
+    }
+
+    public function it_returns_direct_predecessor_previous_step(
+        MultiStepFlowInterface $flow,
+        MultiStepInterface $previousStep,
+        StepRequiredCheckerInterface $stepRequiredChecker
+    ): void
     {
+        $stepRequiredChecker->check()->shouldBeCalled()->willReturn(true);
+        $previousStep->getStepRequiredChecker()->willReturn($stepRequiredChecker);
         $flow->getStepBefore(Argument::any())->shouldBeCalled()->willReturn($previousStep);
         $this->getPreviousStep()->shouldBe($previousStep);
+    }
+
+    public function it_returns_step_before_predecessor_as_previous_step(
+        MultiStepFlowInterface $flow,
+        MultiStepInterface $currentStep,
+        MultiStepInterface $previousStep,
+        MultiStepInterface $prviousStepBefore,
+        StepRequiredCheckerInterface $stepRequiredCheckerPrevious,
+        StepRequiredCheckerInterface $stepRequiredCheckerBeforePrevious
+    ): void {
+
+        $stepRequiredCheckerPrevious->check()->shouldBeCalled()->willReturn(false);
+        $previousStep->getStepRequiredChecker()->willReturn($stepRequiredCheckerPrevious);
+
+        $stepRequiredCheckerBeforePrevious->check()->shouldBeCalled()->willReturn(true);
+        $prviousStepBefore->getStepRequiredChecker()->willReturn($stepRequiredCheckerBeforePrevious);
+
+        $flow->getStepBefore($currentStep)->shouldBeCalled()->willReturn($previousStep);
+        $flow->getStepBefore($previousStep)->shouldBeCalled()->willReturn($prviousStepBefore);
+        $this->getPreviousStep()->shouldBe($prviousStepBefore);
     }
 
     public function it_returns_false_for_has_next_step(MultiStepFlowInterface $flow): void
@@ -57,8 +109,13 @@ class FlowContextSpec extends ObjectBehavior
         $this->hasNextStep()->shouldBe(false);
     }
 
-    public function it_returns_true_for_has_next_step(MultiStepFlowInterface $flow, MultiStepInterface $nextStep): void
-    {
+    public function it_returns_true_for_has_next_step(
+        MultiStepFlowInterface $flow,
+        MultiStepInterface $nextStep,
+        StepRequiredCheckerInterface $stepRequiredChecker
+    ): void {
+        $stepRequiredChecker->check()->shouldBeCalled()->willReturn(true);
+        $nextStep->getStepRequiredChecker()->willReturn($stepRequiredChecker);
         $flow->getStepAfter(Argument::any())->willReturn($nextStep);
         $this->hasNextStep()->shouldBe(true);
     }
@@ -69,9 +126,14 @@ class FlowContextSpec extends ObjectBehavior
         $this->hasPreviousStep()->shouldBe(false);
     }
 
-    public function it_returns_true_for_has_previous_step(MultiStepFlowInterface $flow, MultiStepInterface $nextStep): void
-    {
-        $flow->getStepBefore(Argument::any())->willReturn($nextStep);
+    public function it_returns_true_for_has_previous_step(
+        MultiStepFlowInterface $flow,
+        MultiStepInterface $previousStep,
+        StepRequiredCheckerInterface $stepRequiredChecker
+    ): void {
+        $stepRequiredChecker->check()->shouldBeCalled()->willReturn(true);
+        $previousStep->getStepRequiredChecker()->willReturn($stepRequiredChecker);
+        $flow->getStepBefore(Argument::any())->willReturn($previousStep);
         $this->hasPreviousStep()->shouldBe(true);
     }
 
